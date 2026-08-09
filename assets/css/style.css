@@ -64,20 +64,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Form heading styling */
 .form-card h2 {
     font-size: 28px;
@@ -161,4 +147,114 @@ body {
 
 .footer-text a:hover {
     text-decoration: underline;
+}
+
+
+
+/* Dashboard layout styles */
+
+/* main wrapper for the whole dashboard screen */
+.dashboard-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* sidebar: dark navy menu on the left */
+.sidebar {
+    width: 260px;
+    background-color: #111827;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 20px;
+    flex-shrink: 0;
+}
+
+.sidebar .brand-logo {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    padding-left: 10px;
+    letter-spacing: 1px;
+}
+
+/* sidebar menu items */
+.nav-links {
+    list-style: none;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: #9ca3af;
+    text-decoration: none;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #1f2937;
+    color: #ffffff;
+}
+
+/* main content area on the right */
+.content-area {
+    flex: 1;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* top header: white bar for search and profile */
+.main-header {
+    height: 70px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    flex-shrink: 0;
+}
+
+.header-search input {
+    width: 350px;
+    padding: 10px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f4f6;
+}
+
+.user-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.logout-btn {
+    padding: 8px 15px;
+    background-color: #fee2e2;
+    color: #ef4444;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #fecaca;
 }
