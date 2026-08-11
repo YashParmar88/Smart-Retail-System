@@ -1,26 +1,20 @@
-/* Main stylesheet for Smart Retail System */
-/* Import modern font from Google Fonts */
+/* --- 1. GLOBAL SETTINGS --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Basic reset to clear default browser spacing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif; /* Professional clean font */
+    font-family: 'Inter', sans-serif;
 }
 
-/* Page background and alignment */
 body {
-    background-color: #f0f2f5; /* Light grey background */
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #f3f4f6; /* light grey background */
+    color: #111827;
+    min-height: 100vh;
 }
 
-
-/* Main container for the split screen */
+/* --- 2. LOGIN PAGE STYLES (CENTERED) --- */
 .login-wrapper {
     display: flex;
     width: 1000px;
@@ -28,13 +22,17 @@ body {
     background: #ffffff;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1); /* Subtle professional shadow */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    /* centering the login box without breaking other pages */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-/* Left side - Dark branding area */
 .login-left {
     flex: 1.2;
-    background-color: #111827; /* Dark navy black */
+    background-color: #111827;
     color: #ffffff;
     padding: 60px;
     display: flex;
@@ -42,7 +40,6 @@ body {
     justify-content: center;
 }
 
-/* Right side - Login form area */
 .login-right {
     flex: 1;
     padding: 60px;
@@ -50,136 +47,94 @@ body {
     flex-direction: column;
     justify-content: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Form heading styling */
-.form-card h2 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 8px;
+/* --- Added these missing styles for Login Form --- */
+.form-card {
+    width: 100%; /* Ensures form fills the right side */
 }
 
-/* Sub-text under heading */
-.form-card p {
+.login-right h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.login-right p {
     color: #6b7280;
     margin-bottom: 30px;
     font-size: 14px;
 }
 
-/* Input group spacing */
 .input-group {
     margin-bottom: 20px;
+    width: 100%;
 }
 
-/* Label styling - Uppercase and Bold */
 .input-group label {
-    display: block;
+    display: block; /* Labels will now appear ON TOP of inputs */
     font-size: 11px;
     font-weight: 700;
     color: #374151;
     margin-bottom: 8px;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* Input box styling */
 .input-group input {
-    width: 100%;
+    width: 100%; /* Inputs will now take full width */
     padding: 12px 16px;
     border: 1.5px solid #e5e7eb;
     border-radius: 8px;
     font-size: 14px;
-    transition: all 0.3s ease;
     outline: none;
+    transition: 0.3s;
 }
 
-/* Blue border when user clicks in the box */
 .input-group input:focus {
     border-color: #111827;
     box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.05);
 }
 
-/* Professional black login button */
 .login-btn {
-    width: 100%;
+    width: 100%; /* Button will now take full width */
     padding: 14px;
-    background-color: #000000;
+    background: #000000;
     color: #ffffff;
     border: none;
     border-radius: 8px;
+    cursor: pointer;
     font-weight: 600;
     font-size: 15px;
-    cursor: pointer;
-    transition: background 0.3s ease;
     margin-top: 10px;
+    transition: 0.3s;
 }
 
-/* Button hover effect */
 .login-btn:hover {
     background-color: #1f2937;
 }
-
-/* Footer text links */
-.footer-text {
-    margin-top: 25px;
-    text-align: center;
-    font-size: 14px;
-    color: #6b7280;
-}
-
-.footer-text a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.footer-text a:hover {
-    text-decoration: underline;
-}
-
-
-
-/* Dashboard layout styles */
-
-/* main wrapper for the whole dashboard screen */
+/* --- 3. DASHBOARD & PRODUCTS LAYOUT --- */
 .dashboard-wrapper {
     display: flex;
     height: 100vh;
     width: 100%;
 }
 
-/* sidebar: dark navy menu on the left */
 .sidebar {
     width: 260px;
-    background-color: #111827;
+    background-color: #111827; /* dark navy */
     color: #ffffff;
     display: flex;
     flex-direction: column;
     padding: 25px 20px;
-    flex-shrink: 0;
+    flex-shrink: 0; /* prevents sidebar from shrinking */
 }
 
-.sidebar .brand-logo {
+.brand-logo {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 40px;
-    padding-left: 10px;
     letter-spacing: 1px;
 }
 
-/* sidebar menu items */
 .nav-links {
     list-style: none;
 }
@@ -193,7 +148,6 @@ body {
     margin-bottom: 8px;
     border-radius: 8px;
     font-size: 14px;
-    font-weight: 500;
     transition: 0.3s;
 }
 
@@ -202,16 +156,13 @@ body {
     color: #ffffff;
 }
 
-/* main content area on the right */
 .content-area {
     flex: 1;
-    background-color: #f9fafb;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
 
-/* top header: white bar for search and profile */
 .main-header {
     height: 70px;
     background-color: #ffffff;
@@ -232,18 +183,6 @@ body {
     background-color: #f3f4f6;
 }
 
-.user-nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-}
-
 .logout-btn {
     padding: 8px 15px;
     background-color: #fee2e2;
@@ -252,16 +191,9 @@ body {
     font-size: 13px;
     font-weight: 600;
     border-radius: 6px;
-    transition: 0.3s;
 }
 
-.logout-btn:hover {
-    background-color: #fecaca;
-}
-
-
-
-/* Dashboard stats grid */
+/* --- 4. DASHBOARD STATS CARDS --- */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -269,7 +201,6 @@ body {
     margin-top: 20px;
 }
 
-/* Individual stat card styling */
 .stat-card {
     background: #ffffff;
     padding: 25px;
@@ -278,32 +209,61 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: 0.3s;
 }
 
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+.stat-label { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; }
+.stat-value { font-size: 24px; font-weight: 700; color: #111827; }
+
+/* --- 5. PRODUCTS TABLE STYLING --- */
+.table-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-top: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-.stat-label {
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th {
+    background: #f9fafb;
+    padding: 15px 20px;
+    text-align: left;
     font-size: 12px;
-    font-weight: 700;
-    color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.stat-value {
-    font-size: 24px;
+    color: #6b7280;
     font-weight: 700;
-    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.stat-meta {
-    font-size: 12px;
-    font-weight: 600;
+.product-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 14px;
+    color: #374151;
 }
 
-.text-green { color: #10b981; }
-.text-blue { color: #3b82f6; }
+/* Stock Indicator Progress Bar */
+.stock-bar-container {
+    width: 100px;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.stock-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Logic Colors */
+.bg-red { background-color: #ef4444; }
+.bg-green { background-color: #10b981; }
+.text-red { color: #ef4444; font-weight: 700; }
+.text-green { color: #10b981; font-weight: 700; }
