@@ -340,3 +340,41 @@ body {
     cursor: pointer;
     font-weight: 600;
 }
+
+
+/* --- 7. ACTION BUTTONS STYLES --- */
+.action-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+/* Edit button style */
+.btn-edit {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-edit:hover {
+    background-color: #e5e7eb;
+}
+
+/* Delete button style */
+.btn-delete {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+}
+
+.btn-delete:hover {
+    background-color: #fecaca;
+}

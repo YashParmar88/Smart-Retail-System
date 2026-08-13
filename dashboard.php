@@ -16,6 +16,10 @@ if (!isset($_SESSION['user_id'])) {
 $user_query = "SELECT id FROM users";
 $user_result = mysqli_query($conn, $user_query);
 $total_users = mysqli_num_rows($user_result);
+/* Fetch real count of products from database */
+$prod_query = "SELECT id FROM products";
+$prod_result = mysqli_query($conn, $prod_query);
+$total_products = mysqli_num_rows($prod_result);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +93,7 @@ $total_users = mysqli_num_rows($user_result);
                     <!-- Card 3: Products (Static for now) -->
                     <div class="stat-card">
                         <span class="stat-label">Total Products</span>
-                        <span class="stat-value">1,284</span>
+                        <span class="stat-value"><?php echo $total_products; ?></span>
                         <span class="stat-meta">24 added this week</span>
                     </div>
 

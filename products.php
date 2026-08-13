@@ -2,6 +2,7 @@
 session_start();
 include('includes/db_conn.php');
 
+/* security check: redirect if not logged in */
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
@@ -27,7 +28,7 @@ if (isset($_POST['save_product'])) {
     }
 }
 
-/* fetch products for the table */
+/* fetch all products newest first */
 $sql = "SELECT * FROM products ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
 ?>
@@ -37,7 +38,8 @@ $result = mysqli_query($conn, $sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - Smart Shop ERP</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=1.2">
+    <!-- added versioning to force css refresh -->
+    <link rel="stylesheet" href="assets/css/style.css?v=1.3">
 </head>
 <body>
 
@@ -58,26 +60,33 @@ $result = mysqli_query($conn, $sql);
             </header>
 
             <main style="padding: 30px;">
-                <!-- success message toast -->
-                <?php if($message != ""): ?>
-                    <div style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <!-- success or delete message alert -->
+                <?php if($message != "" || isset($_GET['msg'])): ?>
+                    <div style="background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;">
                         <?php echo $message; ?>
+                        <?php if(isset($_GET['msg'])) echo $_GET['msg']; ?>
                     </div>
                 <?php endif; ?>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                     <div>
                         <h2 style="font-size: 24px;">Product Catalog</h2>
-                        <p style="color: #6b7280; font-size: 14px;">Total: <?php echo mysqli_num_rows($result); ?> items</p>
+                        <p style="color: #6b7280; font-size: 14px;">Manage your inventory catalog and stock levels.</p>
                     </div>
-                    <!-- Trigger Button -->
                     <button onclick="openModal()" class="login-btn" style="width: auto; padding: 12px 24px;">+ Add New Product</button>
                 </div>
 
                 <div class="table-card">
                     <table class="product-table">
                         <thead>
-                            <tr><th>Product Name</th><th>SKU</th><th>Category</th><th>Price</th><th>Stock Status</th></tr>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock Status</th>
+                                <th style="text-align: right;">Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php while($row = mysqli_fetch_assoc($result)): 
@@ -93,6 +102,17 @@ $result = mysqli_query($conn, $sql);
                                         <div class="stock-bar-fill <?php echo $is_low ? 'bg-red':'bg-green'; ?>" style="width: <?php echo min($row['stock_level'], 100); ?>%;"></div>
                                     </div>
                                     <span class="<?php echo $is_low ? 'text-red':'text-green'; ?>"><?php echo $row['stock_level']; ?> Units</span>
+                                </td>
+                                <!-- Added Action Buttons -->
+                                <td style="text-align: right;">
+                                    <div class="action-btns" style="justify-content: flex-end;">
+                                        <a href="#" class="btn-icon btn-edit">Edit</a>
+                                        <a href="delete_product.php?id=<?php echo $row['id']; ?>" 
+                                           class="btn-icon btn-delete" 
+                                           onclick="return confirm('Are you sure you want to delete this product?')">
+                                           Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <?php endwhile; ?>
@@ -152,7 +172,6 @@ $result = mysqli_query($conn, $sql);
         </div>
     </div>
 
-    <!-- Simple JS to handle popup open/close -->
     <script>
         function openModal() { document.getElementById('productModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('productModal').style.display = 'none'; }
