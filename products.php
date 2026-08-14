@@ -106,7 +106,7 @@ $result = mysqli_query($conn, $sql);
                                 <!-- Added Action Buttons -->
                                 <td style="text-align: right;">
                                     <div class="action-btns" style="justify-content: flex-end;">
-                                        <a href="#" class="btn-icon btn-edit">Edit</a>
+                                     <a href="edit_product.php?id=<?php echo $row['id']; ?>" class="btn-icon btn-edit">Edit</a>
                                         <a href="delete_product.php?id=<?php echo $row['id']; ?>" 
                                            class="btn-icon btn-delete" 
                                            onclick="return confirm('Are you sure you want to delete this product?')">
