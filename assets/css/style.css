@@ -378,3 +378,102 @@ body {
 .btn-delete:hover {
     background-color: #fecaca;
 }
+
+
+
+/* --- 8. POS (BILLING) INTERFACE STYLES --- */
+.pos-container {
+    display: flex;
+    height: calc(100vh - 70px); /* full height minus header */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Left side: Product Grid */
+.pos-products {
+    flex: 2;
+    overflow-y: auto;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.pos-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.pos-card:hover {
+    border-color: #000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.pos-card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.pos-card .p-name { font-weight: 600; font-size: 14px; display: block; }
+.pos-card .p-price { color: #2563eb; font-weight: 700; display: block; margin: 5px 0; }
+.pos-card .p-stock { font-size: 11px; color: #6b7280; }
+
+/* Right side: Billing Sidebar */
+.pos-billing {
+    flex: 1;
+    background: #fff;
+    border-radius: 15px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.bill-header {
+    padding: 20px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.order-items {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.bill-footer {
+    padding: 20px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 15px 15px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.grand-total {
+    font-size: 20px;
+    font-weight: 800;
+    color: #111827;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
