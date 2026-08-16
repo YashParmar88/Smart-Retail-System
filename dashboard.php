@@ -41,7 +41,7 @@ $total_products = mysqli_num_rows($prod_result);
             <nav class="nav-links">
                 <a href="dashboard.php" class="nav-item active">Dashboard</a>
                 <a href="products.php" class="nav-item">Products</a>
-                <a href="#" class="nav-item">Categories</a>
+                <a href="categories.php" class="nav-item">Categories</a>
                 <a href="#" class="nav-item">Suppliers</a>
                 <a href="#" class="nav-item">Customers</a>
                 <a href="#" class="nav-item">Inventory</a>

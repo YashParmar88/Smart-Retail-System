@@ -54,6 +54,7 @@ if (isset($_POST['update_product'])) {
                 <a href="dashboard.php" class="nav-item">Dashboard</a>
                 <a href="pos.php" class="nav-item">Billing (POS)</a>
                 <a href="products.php" class="nav-item active">Products</a>
+                <a href="categories.php" class="nav-item">Categories</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444;">Logout</a>
             </nav>
         </aside>

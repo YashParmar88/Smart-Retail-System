@@ -49,6 +49,7 @@ $result = mysqli_query($conn, $sql);
             <nav class="nav-links">
                 <a href="dashboard.php" class="nav-item">Dashboard</a>
                 <a href="products.php" class="nav-item active">Products</a>
+                <a href="categories.php" class="nav-item">Categories</a>
                 <a href="pos.php" class="nav-item">Billing (POS)</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444; margin-top: auto;">Logout</a>
             </nav>
