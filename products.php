@@ -51,6 +51,7 @@ $result = mysqli_query($conn, $sql);
                 <a href="products.php" class="nav-item active">Products</a>
                 <a href="categories.php" class="nav-item">Categories</a>
                 <a href="pos.php" class="nav-item">Billing (POS)</a>
+                <a href="reports.php" class="nav-item">Reports</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444; margin-top: auto;">Logout</a>
             </nav>
         </aside>

@@ -1,26 +1,38 @@
 <?php
-/* start session to access user info */
+/* start session to track user */
 session_start();
 
-/* include database connection - VERY IMPORTANT */
-/* this provides the $conn variable needed for queries */
+/* include database connection file */
 include('includes/db_conn.php');
 
-/* security check: if user is not logged in, redirect to login page */
+/* security: redirect if not logged in */
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
-/* Fetch real count of users from database to show in stats cards */
-$user_query = "SELECT id FROM users";
-$user_result = mysqli_query($conn, $user_query);
-$total_users = mysqli_num_rows($user_result);
-/* Fetch real count of products from database */
-$prod_query = "SELECT id FROM products";
-$prod_result = mysqli_query($conn, $prod_query);
-$total_products = mysqli_num_rows($prod_result);
+/* 1. Get total count of registered users */
+$u_query = "SELECT id FROM users";
+$u_result = mysqli_query($conn, $u_query);
+$total_users = mysqli_num_rows($u_result);
+
+/* 2. Get total count of products in inventory */
+$p_query = "SELECT id FROM products";
+$p_result = mysqli_query($conn, $p_query);
+$total_products = mysqli_num_rows($p_result);
+
+/* 3. Calculate total sales amount for today only */
+$s_query = "SELECT SUM(grand_total) as today_total FROM sales WHERE DATE(created_at) = CURDATE()";
+$s_result = mysqli_query($conn, $s_query);
+$s_data = mysqli_fetch_assoc($s_result);
+$today_sales = $s_data['today_total'] ?? 0;
+
+/* 4. Count items that reached low stock threshold */
+$l_query = "SELECT id FROM products WHERE stock_level <= low_stock_threshold";
+$l_result = mysqli_query($conn, $l_query);
+$low_stock_count = mysqli_num_rows($l_result);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +58,7 @@ $total_products = mysqli_num_rows($prod_result);
                 <a href="#" class="nav-item">Customers</a>
                 <a href="#" class="nav-item">Inventory</a>
                 <a href="pos.php" class="nav-item">Billing (POS)</a>
-                <a href="#" class="nav-item">Reports</a>
+              <a href="reports.php" class="nav-item">Reports</a>
             </nav>
         </aside>
 
