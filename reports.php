@@ -30,6 +30,7 @@ $result = mysqli_query($conn, $sql);
                 <a href="categories.php" class="nav-item">Categories</a>
                 <a href="pos.php" class="nav-item">Billing Counter</a>
                 <a href="reports.php" class="nav-item active">Reports</a>
+                <a href="inventory.php" class="nav-item">Inventory</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444; margin-top: auto;">Logout</a>
             </nav>
         </aside>

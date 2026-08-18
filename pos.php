@@ -60,6 +60,7 @@ $products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level >
                 <a href="categories.php" class="nav-item">Categories</a>
                 <a href="pos.php" class="nav-item active">Billing Counter</a>
                 <a href="reports.php" class="nav-item">Reports</a>
+                <a href="inventory.php" class="nav-item">Inventory</a>
                 <a href="logout.php" class="nav-item" style="color: #ef4444; margin-top: auto;">Logout</a>
             </nav>
         </aside>

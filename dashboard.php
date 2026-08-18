@@ -56,7 +56,7 @@ $low_stock_count = mysqli_num_rows($l_result);
                 <a href="categories.php" class="nav-item">Categories</a>
                 <a href="#" class="nav-item">Suppliers</a>
                 <a href="#" class="nav-item">Customers</a>
-                <a href="#" class="nav-item">Inventory</a>
+                <a href="inventory.php" class="nav-item">Inventory</a>
                 <a href="pos.php" class="nav-item">Billing (POS)</a>
               <a href="reports.php" class="nav-item">Reports</a>
             </nav>
