@@ -43,22 +43,39 @@ if (isset($_POST['update_product'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Product - Smart Shop ERP</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=1.4">
+    <title>Edit Product - Smart retail System</title>
+    <link rel="stylesheet" href="assets/css/style.css?v=3.0">
 </head>
 <body>
     <div class="dashboard-wrapper">
         <aside class="sidebar">
-            <div class="brand-logo">Smart Shop ERP</div>
-            <nav class="nav-links">
-                <a href="dashboard.php" class="nav-item">Dashboard</a>
-                <a href="pos.php" class="nav-item">Billing (POS)</a>
-                <a href="products.php" class="nav-item active">Products</a>
-                <a href="categories.php" class="nav-item">Categories</a>
-                <a href="reports.php" class="nav-item">Reports</a>
-                <a href="inventory.php" class="nav-item">Inventory</a>
-                <a href="logout.php" class="nav-item" style="color: #ef4444;">Logout</a>
-            </nav>
+            <div class="brand-logo">
+    <span>🛠️</span> Shree Ram Hardware
+</div>
+            <!-- Sidebar Navigation Menu -->
+<nav class="nav-links">
+    
+    <!-- 1. DASHBOARD: accessible by everyone -->
+    <a href="dashboard.php" class="nav-item active">Dashboard</a>
+    
+    <!-- 2. BILLING COUNTER: accessible by everyone -->
+    <a href="pos.php" class="nav-item">Billing Counter</a>
+    
+    <!-- 3. CUSTOMERS: accessible by everyone -->
+    <a href="customers.php" class="nav-item">Customers</a>
+
+    <!-- RESTRICTED ACCESS: only admin can see the following menus -->
+    <?php if($_SESSION['user_role'] == 'admin'): ?>
+        
+        <a href="products.php" class="nav-item">Products</a>
+        <a href="categories.php" class="nav-item">Categories</a>
+        <a href="suppliers.php" class="nav-item">Suppliers</a>
+        <a href="inventory.php" class="nav-item">Inventory</a>
+        <a href="reports.php" class="nav-item">Sales History</a>
+        
+    <?php endif; ?>
+
+</nav>
         </aside>
 
         <div class="content-area">

@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) { header("Location: pos.php"); exit(); }
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bill Success - Smart Shop ERP</title>
+    <title>Bill Success - Smart retail System</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body style="background:#f3f4f6; display:flex; align-items:center; justify-content:center; height:100vh;">

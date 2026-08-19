@@ -14,7 +14,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'reset') {
 /* --- CART LOGIC --- */
 if (!isset($_SESSION['cart'])) { $_SESSION['cart'] = []; }
 
-/* Prevent adding items if current bill is already generated */
+/* logic to add item - checking success to prevent multiple adds */
 if (isset($_GET['add']) && !isset($_GET['success'])) {
     $pid = $_GET['add'];
     $p_res = mysqli_query($conn, "SELECT * FROM products WHERE id = $pid");
@@ -26,21 +26,31 @@ if (isset($_GET['add']) && !isset($_GET['success'])) {
     header("Location: pos.php"); exit();
 }
 
-/* Remove item only if not success state */
+/* remove item logic */
 if (isset($_GET['remove']) && !isset($_GET['success'])) { 
     unset($_SESSION['cart'][$_GET['remove']]); 
     header("Location: pos.php"); exit(); 
 }
 
-$products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level > 0 ORDER BY product_name ASC");
+/* --- TASK: POS SEARCH LOGIC --- */
+$search_term = "";
+if (isset($_GET['search'])) {
+    $search_term = mysqli_real_escape_string($conn, $_GET['search']);
+    /* query products matching name or sku and having stock */
+    $sql = "SELECT * FROM products WHERE stock_level > 0 AND (product_name LIKE '%$search_term%' OR sku LIKE '%$search_term%') ORDER BY product_name ASC";
+} else {
+    /* default query for all available products */
+    $sql = "SELECT * FROM products WHERE stock_level > 0 ORDER BY product_name ASC";
+}
+$products_list = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SuperMarket - Billing Counter</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=2.1">
+    <title>Smart retail System - Billing Counter</title>
+    <link rel="stylesheet" href="assets/css/style.css?v=3.0">
     <style>
         .cart-item-row { display: flex; justify-content: space-between; border-bottom: 1px solid #f3f4f6; padding: 10px 0; font-size: 13px; }
         .remove-btn { color: #ef4444; text-decoration: none; font-weight: bold; margin-left: 8px; }
@@ -53,16 +63,33 @@ $products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level >
 
     <div class="dashboard-wrapper">
         <aside class="sidebar">
-            <div class="brand-logo">SuperMarket</div>
-            <nav class="nav-links">
-                <a href="dashboard.php" class="nav-item">Dashboard</a>
-                <a href="products.php" class="nav-item">Products</a>
-                <a href="categories.php" class="nav-item">Categories</a>
-                <a href="pos.php" class="nav-item active">Billing Counter</a>
-                <a href="reports.php" class="nav-item">Reports</a>
-                <a href="inventory.php" class="nav-item">Inventory</a>
-                <a href="logout.php" class="nav-item" style="color: #ef4444; margin-top: auto;">Logout</a>
-            </nav>
+          <div class="brand-logo">
+    <span>🛠️</span> Shree Ram Hardware
+</div>
+            <!-- Sidebar Navigation Menu -->
+<nav class="nav-links">
+    
+    <!-- 1. DASHBOARD: accessible by everyone -->
+    <a href="dashboard.php" class="nav-item active">Dashboard</a>
+    
+    <!-- 2. BILLING COUNTER: accessible by everyone -->
+    <a href="pos.php" class="nav-item">Billing Counter</a>
+    
+    <!-- 3. CUSTOMERS: accessible by everyone -->
+    <a href="customers.php" class="nav-item">Customers</a>
+
+    <!-- RESTRICTED ACCESS: only admin can see the following menus -->
+    <?php if($_SESSION['user_role'] == 'admin'): ?>
+        
+        <a href="products.php" class="nav-item">Products</a>
+        <a href="categories.php" class="nav-item">Categories</a>
+        <a href="suppliers.php" class="nav-item">Suppliers</a>
+        <a href="inventory.php" class="nav-item">Inventory</a>
+        <a href="reports.php" class="nav-item">Sales History</a>
+        
+    <?php endif; ?>
+
+</nav>
         </aside>
 
         <div class="content-area">
@@ -73,20 +100,28 @@ $products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level >
 
             <div class="pos-container">
                 <div class="pos-products">
+                    <!-- UPDATED: Search Bar Form -->
                     <div style="margin-bottom: 20px;">
-                        <input type="text" placeholder="Search products..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                        <form action="pos.php" method="GET">
+                            <input type="text" name="search" placeholder="Search products..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;" value="<?php echo htmlspecialchars($search_term); ?>">
+                        </form>
                     </div>
+
                     <div class="product-grid">
-                        <?php while($p = mysqli_fetch_assoc($products_list)): ?>
-                        <a href="pos.php?add=<?php echo $p['id']; ?>" class="pos-card-link">
-                            <div class="pos-card">
-                                <div style="font-size: 24px; margin-bottom: 10px;">📦</div>
-                                <span class="p-name"><?php echo $p['product_name']; ?></span>
-                                <span class="p-price">₹<?php echo number_format($p['price'], 2); ?></span>
-                                <span class="p-stock">Stock: <?php echo $p['stock_level']; ?></span>
-                            </div>
-                        </a>
-                        <?php endwhile; ?>
+                        <?php if(mysqli_num_rows($products_list) > 0): ?>
+                            <?php while($p = mysqli_fetch_assoc($products_list)): ?>
+                            <a href="pos.php?add=<?php echo $p['id']; ?>" class="pos-card-link">
+                                <div class="pos-card">
+                                    <div style="font-size: 24px; margin-bottom: 10px;">📦</div>
+                                    <span class="p-name"><?php echo $p['product_name']; ?></span>
+                                    <span class="p-price">₹<?php echo number_format($p['price'], 2); ?></span>
+                                    <span class="p-stock">Stock: <?php echo $p['stock_level']; ?></span>
+                                </div>
+                            </a>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <div style="grid-column: 1/-1; text-align: center; padding: 50px; color: #9ca3af;">No matching products found.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -137,7 +172,6 @@ $products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level >
                             
                             <?php if(isset($_GET['success'])): ?>
                                 <a href="print_bill.php?id=<?php echo $_GET['id']; ?>" target="_blank" class="login-btn btn-print" style="text-align:center; text-decoration:none; display:block;">Print Receipt</a>
-                                <!-- This link will now trigger the Cart Reset -->
                                 <a href="pos.php?action=reset" class="login-btn btn-done" style="text-align:center; text-decoration:none; display:block;">Next Bill (Done) &rarr;</a>
                             <?php else: ?>
                                 <button type="submit" name="generate_bill" class="login-btn" style="background: #10b981; margin-top: 15px;">Generate Bill &check;</button>
@@ -149,7 +183,7 @@ $products_list = mysqli_query($conn, "SELECT * FROM products WHERE stock_level >
         </div>
     </div>
 
-    <!-- Alert only at the very end -->
+    <!-- display success alert if triggered -->
     <?php if(isset($_GET['success'])): ?>
         <script>setTimeout(() => { alert("Bill Saved Successfully!"); }, 100);</script>
     <?php endif; ?>

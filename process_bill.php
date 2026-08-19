@@ -26,8 +26,6 @@ if (isset($_POST['generate_bill']) && !empty($_SESSION['cart'])) {
             mysqli_query($conn, "UPDATE products SET stock_level = stock_level - $qty WHERE id = $pid");
         }
 
-        /* BUG FIX: Cart ko yahan nahi mitana hai! */
-        /* Direct wapas jao ID ke saath */
         header("Location: pos.php?success=1&id=" . $sale_id);
         exit();
     }
